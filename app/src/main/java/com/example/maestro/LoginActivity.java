@@ -12,11 +12,13 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity {
  private Button button;
  private TextView txtView;
+ private MyOrientationEventListener mOrientationEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mOrientationEventListener = new MyOrientationEventListener(this);
         button= (Button) findViewById(R.id.btn_login);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,5 +35,21 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    protected void onResume() {
+        super.onResume();
+
+        // Rejestrowanie MyOrientationEventListener
+        if (mOrientationEventListener.canDetectOrientation()) {
+            mOrientationEventListener.enable();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Wyrejestrowywanie MyOrientationEventListener
+        mOrientationEventListener.disable();
     }
 }

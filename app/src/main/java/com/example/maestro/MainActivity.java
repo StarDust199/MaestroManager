@@ -9,10 +9,12 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton imageButton;
+    private MyOrientationEventListener mOrientationEventListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mOrientationEventListener = new MyOrientationEventListener(this);
 
 
         imageButton = (ImageButton) findViewById(R.id.btn_attendance);
@@ -47,6 +49,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    protected void onResume() {
+        super.onResume();
+
+        // Rejestrowanie MyOrientationEventListener
+        if (mOrientationEventListener.canDetectOrientation()) {
+            mOrientationEventListener.enable();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Wyrejestrowywanie MyOrientationEventListener
+        mOrientationEventListener.disable();
     }
 
 
