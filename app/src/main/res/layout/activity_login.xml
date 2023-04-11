@@ -7,93 +7,66 @@
     android:background="@color/latte_med"
     tools:context=".LoginActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="196dp"
+        android:layout_height="188dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/maestro_ikona_mniejsza"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintBottom_toTopOf="@id/login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/login"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo" />
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="196dp"
-            android:layout_height="188dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="113dp"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="490dp"
-            android:src="@drawable/maestro_ikona_mniejsza" />
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/password"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login" />
 
-        <EditText
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="293dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="388dp"
-            android:background="@drawable/edit_text_background"
-            android:hint="@string/login"
-            android:padding="12dp" />
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_background"
+        android:text="@string/btn_login"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="wrap_content"
-            android:layout_height="52dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="381dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="299dp"
-            android:background="@drawable/edit_text_background"
-            android:hint="@string/password"
-            android:padding="12dp" />
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="203dp"
-            android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="112dp"
-            android:layout_marginTop="472dp"
-            android:layout_marginEnd="96dp"
-            android:layout_marginBottom="211dp"
-            android:background="@drawable/button_background"
-            android:text="@string/btn_login"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/text_register"
-            android:layout_width="319dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="54dp"
-            android:layout_marginTop="558dp"
-            android:layout_marginEnd="38dp"
-            android:layout_marginBottom="130dp"
-            android:text="@string/msg_zar"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/text_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/msg_zar"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
