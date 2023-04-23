@@ -45,7 +45,7 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues Values = new ContentValues();
         Values.put(COLUMN_LOGIN, registrationModel.getLogin());
         Values.put(COLUMN_PASSWORD, registrationModel.getPassword());
-        Values.put(COLUMN_EMAIL,registrationModel.getEmail());
+        Values.put(COLUMN_EMAIL, registrationModel.getEmail());
         long insert = db.insert(TABLE_NAME, null, Values);
         if (insert == -1) {
             return false;
@@ -63,8 +63,8 @@ public class DbHelper extends SQLiteOpenHelper {
             int column_id = cursor.getInt(0);
             String login = cursor.getString(1);
             String password = cursor.getString(2);
-            String email= cursor.getString(3);
-            RegistrationModel Register = new RegistrationModel(column_id, login,password, email);
+            String email = cursor.getString(3);
+            RegistrationModel Register = new RegistrationModel(column_id, login, password, email);
             return Register;
         }
         cursor.close();
@@ -83,8 +83,18 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues Values = new ContentValues();
         Values.put(COLUMN_LOGIN, registrationModel.getLogin());
         Values.put(COLUMN_PASSWORD, registrationModel.getPassword());
-        Values.put(COLUMN_EMAIL,registrationModel.getEmail());
+        Values.put(COLUMN_EMAIL, registrationModel.getEmail());
         return db.update(TABLE_NAME, Values, COLUMN_ID + "= ?", new String[]{String.valueOf(registrationModel.getId())}) > 0;
     }
+
+    public boolean login(String login, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM registration WHERE login=? AND password=?", new String[]{login, password});
+        boolean result = cursor.moveToFirst();
+        cursor.close();
+        db.close();
+        return result;
+    }
 }
+
 

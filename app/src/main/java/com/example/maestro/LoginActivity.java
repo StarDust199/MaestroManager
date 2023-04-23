@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
  private Button button;
@@ -19,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
  private MyOrientationEventListener mOrientationEventListener;
     private ImageView mLogoImageView;
     private EditText mLoginEditText, mPasswordEditText;
-    private String mLoginText,mPasswordText,mRegisterText;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +33,19 @@ public class LoginActivity extends AppCompatActivity {
         mLoginEditText = findViewById(R.id.login);
         mPasswordEditText = findViewById(R.id.password);
 
-        if(savedInstanceState != null) {
-            // Przywróć stan ekranu po zmianie orientacji
-            mLoginText = savedInstanceState.getString("login_text");
-            mPasswordText = savedInstanceState.getString("password_text");
-            mRegisterText = savedInstanceState.getString("register_text");
 
-            mLoginEditText.setText(mLoginText);
-            mPasswordEditText.setText(mPasswordText);
-            txtView.setText(mRegisterText);
-        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                String login = mLoginEditText.getText().toString();
+                String password = mPasswordEditText.getText().toString();
+
+                DbHelper dbHelper = new DbHelper(LoginActivity.this);
+                if (dbHelper.login(login, password)) {
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                } else {
+                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
                 startActivity(intent);
             }
         });
@@ -74,32 +74,5 @@ public class LoginActivity extends AppCompatActivity {
         // Wyrejestrowywanie MyOrientationEventListener
         mOrientationEventListener.disable();
     }
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
-        // Zapisz stan ekranu przed zmianą orientacji
-        mLoginText = mLoginEditText.getText().toString();
-        mPasswordText = mPasswordEditText.getText().toString();
-        mRegisterText = txtView.getText().toString();
-
-        outState.putString("login_text", mLoginText);
-        outState.putString("password_text", mPasswordText);
-        outState.putString("register_text", mRegisterText);
-    }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Zablokuj zmianę orientacji ekranu dla elementów ImageView i Button
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mLogoImageView.getLayoutParams().height = 120;
-            mLogoImageView.getLayoutParams().width = 120;
-            button.getLayoutParams().width = 400;
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mLogoImageView.getLayoutParams().height = 188;
-            mLogoImageView.getLayoutParams().width = 196;
-            button.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        }
-    }
 }
