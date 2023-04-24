@@ -1,10 +1,5 @@
 package com.example.maestro;
 
-import static com.example.maestro.RegistrationModel.COLUMN_EMAIL;
-import static com.example.maestro.RegistrationModel.COLUMN_ID;
-import static com.example.maestro.RegistrationModel.COLUMN_LOGIN;
-import static com.example.maestro.RegistrationModel.COLUMN_PASSWORD;
-import static com.example.maestro.RegistrationModel.TABLE_NAME;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,7 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "myDatabase.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
+
+    public static final String TABLE_NAME = "registration";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_LOGIN = "login";
+    public static final String COLUMN_PASSWORD = "password";
+    public static final String COLUMN_EMAIL = "email";
+
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,12 +25,14 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Tworzenie tabeli rejestracji
-        String CREATE_REGISTRATION_TABLE = "CREATE TABLE registration ("
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "login TEXT,"
-                + "password TEXT,"
-                + "email TEXT"
-                + ")";
+        String CREATE_REGISTRATION_TABLE =
+                "CREATE TABLE " + TABLE_NAME + "("
+                        + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                        + COLUMN_LOGIN + " TEXT,"
+                        + COLUMN_PASSWORD + " TEXT,"
+                        + COLUMN_EMAIL + " TEXT"
+                        + ")";
+
         db.execSQL(CREATE_REGISTRATION_TABLE);
     }
 
@@ -77,7 +81,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME, COLUMN_ID + "=" + id, null) > 0;
     }
 
-
     public boolean updateUsers(RegistrationModel registrationModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Values = new ContentValues();
@@ -87,14 +90,23 @@ public class DbHelper extends SQLiteOpenHelper {
         return db.update(TABLE_NAME, Values, COLUMN_ID + "= ?", new String[]{String.valueOf(registrationModel.getId())}) > 0;
     }
 
-    public boolean login(String login, String password) {
+    public boolean checkUser(String login, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM registration WHERE login=? AND password=?", new String[]{login, password});
-        boolean result = cursor.moveToFirst();
+        String[] columns = {COLUMN_ID};
+        String selection = COLUMN_LOGIN + " = ?" + " AND " + COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = {login, password};
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
         cursor.close();
         db.close();
-        return result;
+
+        if (count > 0) {
+            return true; // znaleziono użytkownika z podanymi loginem i hasłem
+        } else {
+            return false; // nie znaleziono użytkownika z podanymi loginem i hasłem
+        }
     }
+
 }
 
 

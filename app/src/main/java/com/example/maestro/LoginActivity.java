@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mLoginEditText, mPasswordEditText;
     Intent intent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +38,11 @@ public class LoginActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String login = mLoginEditText.getText().toString();
-                String password = mPasswordEditText.getText().toString();
+               String login = mLoginEditText.getText().toString();
+             String  password = mPasswordEditText.getText().toString();
 
                 DbHelper dbHelper = new DbHelper(LoginActivity.this);
-                if (dbHelper.login(login, password)) {
+                if (dbHelper.checkUser(login, password)) {
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                 } else {
                     Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();

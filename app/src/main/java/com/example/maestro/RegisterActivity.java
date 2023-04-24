@@ -5,15 +5,48 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
     private TextView txtView;
     private MyOrientationEventListener mOrientationEventListener;
+    private EditText mLogin, mPassword, mEmail;
+    DbHelper db;
+    RegistrationModel model;
+    Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = new DbHelper(RegisterActivity.this);
         setContentView(R.layout.activity_register);
+        mLogin = (EditText) findViewById(R.id.login);
+        mPassword = (EditText) findViewById(R.id.password);
+        mEmail = (EditText) findViewById(R.id.email);
+        btn=(Button) findViewById(R.id.btn_register);
+        if (getIntent().getExtras() != null && getIntent().hasExtra("id")) {
+            model = db.getModelByID(getIntent().getIntExtra("id", 0));
+            if (model != null) {
+                mLogin.setText(model.getLogin());
+                mPassword.setText(model.getPassword() + "");
+                mEmail.setText(model.getEmail());
+
+            } else {
+                Toast.makeText(this, "zasadniczo to sie zdupiło XD", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            model = new RegistrationModel();
+        }
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveUser(view);
+            }
+        });
+
         mOrientationEventListener = new MyOrientationEventListener(this);
         txtView=(TextView) findViewById(R.id.txt_login);
         txtView.setOnClickListener(view -> {
@@ -36,5 +69,38 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Wyrejestrowywanie MyOrientationEventListener
         mOrientationEventListener.disable();
+    }
+    public void saveUser(View view) {
+
+        if (model.getId() == 0)
+            model.setLogin(mLogin.getText().toString());
+
+        model.setPassword(mPassword.getText().toString());
+        model.setEmail(mEmail.getText().toString());
+        if (model.getId() > 0) {
+            if (db.updateUsers(model)) {
+                Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (db.addUser(model)) {
+                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        }
+        backLoginAcivity(view);
+    }
+
+    public void backLoginAcivity(View v) {
+        Intent intent;
+        if (model != null && model.getId() > 0) {
+            intent = new Intent(this, LoginActivity.class);
+        } else {
+            intent = new Intent(this, RegisterActivity.class);
+        }
+        startActivity(intent);
     }
 }
