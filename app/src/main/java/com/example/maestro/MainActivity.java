@@ -1,55 +1,62 @@
 package com.example.maestro;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imageButton;
     private MyOrientationEventListener mOrientationEventListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mOrientationEventListener = new MyOrientationEventListener(this);
 
+        Button button= findViewById(R.id.logout);
+        button.setOnClickListener(view -> {
+            SharedPreferences sharedPreferences = getSharedPreferences("SESSION_DATA", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
 
-        imageButton = (ImageButton) findViewById(R.id.btn_attendance);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AttendanceActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         });
-        imageButton= (ImageButton) findViewById(R.id.btn_calendar);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-                startActivity(intent);
-            }
+
+
+        ImageButton imageButton = findViewById(R.id.btn_attendance);
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AttendanceActivity.class);
+            startActivity(intent);
         });
-        imageButton= (ImageButton) findViewById(R.id.btn_instrument);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InstrumentActivity.class);
-                startActivity(intent);
-            }
+        imageButton = findViewById(R.id.btn_calendar);
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+            startActivity(intent);
         });
-        imageButton= (ImageButton) findViewById(R.id.btn_notes);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NotesActivity.class);
-                startActivity(intent);
-            }
+        imageButton = findViewById(R.id.btn_instrument);
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, InstrumentActivity.class);
+            startActivity(intent);
+        });
+        imageButton = findViewById(R.id.btn_notes);
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, NotesActivity.class);
+            startActivity(intent);
         });
     }
+    @Override
+    public void onBackPressed() {
+        // Nie wywołuj super metody, aby zablokować przycisk cofania
+    }
+
     protected void onResume() {
         super.onResume();
 

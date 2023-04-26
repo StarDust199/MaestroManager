@@ -2,6 +2,7 @@ package com.example.maestro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,21 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
-    private TextView txtView;
     private MyOrientationEventListener mOrientationEventListener;
     private EditText mLogin, mPassword, mEmail;
     DbHelper db;
     RegistrationModel model;
     Button btn;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new DbHelper(RegisterActivity.this);
         setContentView(R.layout.activity_register);
-        mLogin = (EditText) findViewById(R.id.login);
-        mPassword = (EditText) findViewById(R.id.password);
-        mEmail = (EditText) findViewById(R.id.email);
-        btn=(Button) findViewById(R.id.btn_register);
+        mLogin = findViewById(R.id.login);
+        mPassword = findViewById(R.id.password);
+        mEmail = findViewById(R.id.email);
+        btn= findViewById(R.id.btn_register);
         if (getIntent().getExtras() != null && getIntent().hasExtra("id")) {
             model = db.getModelByID(getIntent().getIntExtra("id", 0));
             if (model != null) {
@@ -40,15 +41,10 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             model = new RegistrationModel();
         }
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveUser(view);
-            }
-        });
+        btn.setOnClickListener(this::saveUser);
 
         mOrientationEventListener = new MyOrientationEventListener(this);
-        txtView=(TextView) findViewById(R.id.txt_login);
+        TextView txtView = findViewById(R.id.txt_login);
         txtView.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);

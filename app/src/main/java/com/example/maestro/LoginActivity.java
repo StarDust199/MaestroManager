@@ -1,24 +1,17 @@
 package com.example.maestro;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class LoginActivity extends AppCompatActivity {
- private Button button;
- private TextView txtView;
- private MyOrientationEventListener mOrientationEventListener;
-    private ImageView mLogoImageView;
+    private MyOrientationEventListener mOrientationEventListener;
     private EditText mLoginEditText, mPasswordEditText;
     Intent intent;
 
@@ -28,35 +21,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mOrientationEventListener = new MyOrientationEventListener(this);
-        button= (Button) findViewById(R.id.btn_login);
-        txtView=(TextView) findViewById(R.id.text_register);
-        mLogoImageView = findViewById(R.id.logo);
+        Button button = findViewById(R.id.btn_login);
+        TextView txtView = findViewById(R.id.text_register);
+        ImageView mLogoImageView = findViewById(R.id.logo);
         mLoginEditText = findViewById(R.id.login);
         mPasswordEditText = findViewById(R.id.password);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               String login = mLoginEditText.getText().toString();
-             String  password = mPasswordEditText.getText().toString();
+        button.setOnClickListener(v -> {
+           String login = mLoginEditText.getText().toString();
+         String  password = mPasswordEditText.getText().toString();
 
-                DbHelper dbHelper = new DbHelper(LoginActivity.this);
-                if (dbHelper.checkUser(login, password)) {
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                } else {
-                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                }
-                startActivity(intent);
+            DbHelper dbHelper = new DbHelper(LoginActivity.this);
+            if (dbHelper.checkUser(login, password)) {
+                intent = new Intent(LoginActivity.this, MainActivity.class);
+            } else {
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                intent = new Intent(LoginActivity.this,LoginActivity.class);
             }
+            startActivity(intent);
         });
 
-        txtView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        txtView.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
     protected void onResume() {

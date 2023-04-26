@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/latte_med"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,11 +17,12 @@
         android:layout_height="188dp"
         android:layout_marginTop="52dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/maestro_ikona_mniejsza"
+        android:src="@drawable/maestroikona"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/todo" />
 
         <EditText
         android:id="@+id/login"
@@ -34,7 +34,8 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo" />
+        app:layout_constraintTop_toBottomOf="@id/logo"
+            android:autofillHints="" />
 
         <EditText
         android:id="@+id/password"
@@ -44,9 +45,11 @@
         android:background="@drawable/edit_text_background"
         android:hint="@string/password"
         android:padding="12dp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login" />
+        app:layout_constraintTop_toBottomOf="@id/login"
+            android:autofillHints="" />
 
         <Button
         android:id="@+id/btn_login"

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "myDatabase.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public static final String TABLE_NAME = "registration";
     public static final String COLUMN_ID = "id";
@@ -51,12 +51,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Values.put(COLUMN_PASSWORD, registrationModel.getPassword());
         Values.put(COLUMN_EMAIL, registrationModel.getEmail());
         long insert = db.insert(TABLE_NAME, null, Values);
-        if (insert == -1) {
-            return false;
-
-        } else {
-            return true;
-        }
+        return insert != -1;
     }
 
     public RegistrationModel getModelByID(int id) {
@@ -68,8 +63,7 @@ public class DbHelper extends SQLiteOpenHelper {
             String login = cursor.getString(1);
             String password = cursor.getString(2);
             String email = cursor.getString(3);
-            RegistrationModel Register = new RegistrationModel(column_id, login, password, email);
-            return Register;
+            return new RegistrationModel(column_id, login, password, email);
         }
         cursor.close();
         db.close();
@@ -100,11 +94,8 @@ public class DbHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
 
-        if (count > 0) {
-            return true; // znaleziono użytkownika z podanymi loginem i hasłem
-        } else {
-            return false; // nie znaleziono użytkownika z podanymi loginem i hasłem
-        }
+
+        return count > 0; // znaleziono użytkownika z podanymi loginem i hasłem
     }
 
 }

@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Maestro</string>
     <string name="login">Login</string>
-    <string name="password">password</string>
-    <string name="email">email</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
     <string name="btn_login">Zaloguj</string>
     <string name="btn_register">Zarejestruj</string>
     <string name="msg_zar">Nie masz jeszcze konta? Zarejestruj się.</string>
     <string name="msg_zal">Masz już konto? Zaloguj się.</string>
+    <string name="todo">TODO</string>
+    <string name="wyloguj">Wyloguj</string>
 
 </resources>
