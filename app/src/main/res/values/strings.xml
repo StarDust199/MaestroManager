@@ -7,5 +7,7 @@
     <string name="btn_register">Zarejestruj</string>
     <string name="msg_zar">Nie masz jeszcze konta? Zarejestruj się.</string>
     <string name="msg_zal">Masz już konto? Zaloguj się.</string>
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
 
 </resources>
