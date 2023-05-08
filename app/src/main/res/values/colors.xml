@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="latte">#DEA592</color>
     <color name="latte_med">#BEA19A</color>
+    <color name="gray">#808080</color>
 </resources>
