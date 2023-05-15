@@ -85,6 +85,10 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public boolean checkUser(String login, String password) {
+        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
+            return false; // niepoprawne dane logowania
+        }
+
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {COLUMN_ID};
         String selection = COLUMN_LOGIN + " = ?" + " AND " + COLUMN_PASSWORD + " = ?";

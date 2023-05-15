@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
                 mEmail.setText(model.getEmail());
 
             } else {
-                Toast.makeText(this, "zasadniczo to sie zdupiło XD", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Napotkano problem", Toast.LENGTH_SHORT).show();
             }
         } else {
             model = new RegistrationModel();
@@ -67,6 +67,13 @@ public class RegisterActivity extends AppCompatActivity {
         mOrientationEventListener.disable();
     }
     public void saveUser(View view) {
+        String login = mLogin.getText().toString();
+        String password = mPassword.getText().toString();
+
+        if (login == null || password == null ||login.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Nazwa użytkownika i hasło są wymagane", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (model.getId() == 0)
             model.setLogin(mLogin.getText().toString());
