@@ -17,6 +17,11 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_EMAIL = "email";
 
+    public static final String TABLE_NOTES = "Notes";
+    public static final String NOTES_ID = "id";
+    public static final String NOTES_AUTH = "author";
+    public static final String NOTES_TITLE = "title";
+
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,13 +38,20 @@ public class DbHelper extends SQLiteOpenHelper {
                         + COLUMN_EMAIL + " TEXT"
                         + ")";
 
+        String CREATE_NOTES_TABLE =
+                "CREATE TABLE " + TABLE_NOTES + "("
+                        + NOTES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                        + NOTES_AUTH + " TEXT,"
+                        + NOTES_TITLE + " TEXT" + ")";
         db.execSQL(CREATE_REGISTRATION_TABLE);
+        db.execSQL(CREATE_NOTES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Aktualizacja bazy danych
         db.execSQL("DROP TABLE IF EXISTS registration");
+        db.execSQL("DROP TABLE IF EXISTS Notes");
         onCreate(db);
     }
 
@@ -51,6 +63,14 @@ public class DbHelper extends SQLiteOpenHelper {
         Values.put(COLUMN_PASSWORD, registrationModel.getPassword());
         Values.put(COLUMN_EMAIL, registrationModel.getEmail());
         long insert = db.insert(TABLE_NAME, null, Values);
+        return insert != -1;
+    }
+    public boolean addNotes(NotesModel notesModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Values = new ContentValues();
+        Values.put(NOTES_AUTH, notesModel.getAuthor());
+        Values.put(NOTES_TITLE, notesModel.getTitle());
+        long insert = db.insert(TABLE_NOTES, null, Values);
         return insert != -1;
     }
 
@@ -70,6 +90,21 @@ public class DbHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public NotesModel getNModelByID(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = " SELECT * FROM " + TABLE_NOTES+ " WHERE " + NOTES_ID + " = " + id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            int column_id = cursor.getInt(0);
+            String author = cursor.getString(1);
+            String title = cursor.getString(2);
+
+            return new NotesModel(column_id, author, title);
+        }
+        cursor.close();
+        db.close();
+        return null;
+    }
     public boolean deleteUsersByID(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, COLUMN_ID + "=" + id, null) > 0;
