@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         String login = mLogin.getText().toString();
         String password = mPassword.getText().toString();
 
-        if (login == null || password == null ||login.isEmpty() || password.isEmpty()) {
+        if (login.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Nazwa użytkownika i hasło są wymagane", Toast.LENGTH_SHORT).show();
             return;
         }

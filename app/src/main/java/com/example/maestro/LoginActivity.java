@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             if (dbHelper.checkUser(login, password)) {
                 intent = new Intent(LoginActivity.this, MainActivity.class);
             } else {
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Nazwa użytkownika i hasło są wymagane", Toast.LENGTH_SHORT).show();
                 intent = new Intent(LoginActivity.this,LoginActivity.class);
             }
             startActivity(intent);
