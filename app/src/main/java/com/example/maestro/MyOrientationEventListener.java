@@ -6,7 +6,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 public class MyOrientationEventListener extends OrientationEventListener {
-    private Context mContext;
+    private final Context mContext;
     private int mOrientation = -1;
 
     public MyOrientationEventListener(Context context) {
