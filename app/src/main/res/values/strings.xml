@@ -9,5 +9,9 @@
     <string name="msg_zal">Masz już konto? Zaloguj się.</string>
     <string name="todo">TODO</string>
     <string name="wyloguj">Wyloguj</string>
+    <string name="title">Title</string>
+    <string name="dodaj">Dodaj</string>
+    <string name="autor">Autor</string>
+    <string name="upload" />
 
 </resources>

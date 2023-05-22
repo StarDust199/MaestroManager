@@ -46,7 +46,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_REGISTRATION_TABLE);
         db.execSQL(CREATE_NOTES_TABLE);
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Aktualizacja bazy danych
@@ -54,7 +53,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Notes");
         onCreate(db);
     }
-
 
     public boolean addUser(RegistrationModel registrationModel) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -73,7 +71,6 @@ public class DbHelper extends SQLiteOpenHelper {
         long insert = db.insert(TABLE_NOTES, null, Values);
         return insert != -1;
     }
-
     public RegistrationModel getModelByID(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String queryString = " SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = " + id;
@@ -119,6 +116,13 @@ public class DbHelper extends SQLiteOpenHelper {
         return db.update(TABLE_NAME, Values, COLUMN_ID + "= ?", new String[]{String.valueOf(registrationModel.getId())}) > 0;
     }
 
+    public boolean updateNotes(NotesModel notesModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues Values = new ContentValues();
+        Values.put(NOTES_AUTH, notesModel.getAuthor());
+        Values.put(NOTES_TITLE, notesModel.getTitle());
+        return db.update(TABLE_NOTES, Values, COLUMN_ID + "= ?", new String[]{String.valueOf(notesModel.getId())}) > 0;
+    }
     public boolean checkUser(String login, String password) {
         if ( login.isEmpty() || password.isEmpty()) {
             return false; // niepoprawne dane logowania
