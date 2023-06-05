@@ -11,5 +11,13 @@
     <string name="wyloguj">Wyloguj</string>
     <string name="back">back</string>
     <string name="forward">forward</string>
+    <string name="pon">PON</string>
+    <string name="maj_2023">Maj 2023</string>
+    <string name="wt">WT</string>
+    <string name="sr">ŚR</string>
+    <string name="czw">CZW</string>
+    <string name="pi">PIĄ</string>
+    <string name="sob">SOB</string>
+    <string name="niedz">NIEDZ</string>
 
 </resources>

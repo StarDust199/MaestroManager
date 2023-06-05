@@ -1,19 +1,15 @@
 package com.example.maestro;
 
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -30,7 +26,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test);
+        setContentView(R.layout.activity_calendar);
         mOrientationEventListener = new MyOrientationEventListener(this);
         initWidgets();
         selectedDate = LocalDate.now();

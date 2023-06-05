@@ -47,14 +47,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AttendanceActivity"
+            android:name=".CalendarActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CalendarActivity"
+            android:name=".AttendanceActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
