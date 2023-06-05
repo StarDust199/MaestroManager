@@ -45,28 +45,26 @@
 
     <ImageButton
         android:id="@+id/btn_attendance"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="102dp"
+        android:layout_height="90dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@id/guideline4"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@id/guideline1"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.507"
         app:srcCompat="@drawable/user"
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton
         android:id="@+id/btn_calendar"
-        android:layout_width="131dp"
-        android:layout_height="143dp"
+        android:layout_width="88dp"
+        android:layout_height="94dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/fab_transformation_scrim_behavior"
         android:onClick="openAcivity"
-
-
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
@@ -76,32 +74,29 @@
 
     <ImageButton
         android:id="@+id/btn_notes"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="98dp"
+        android:layout_height="92dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/bottom_sheet_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline1"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:srcCompat="@drawable/notes"
         tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
 
     <ImageButton
         android:id="@+id/btn_instrument"
-        android:layout_width="188dp"
-        android:layout_height="139dp"
+        android:layout_width="97dp"
+        android:layout_height="83dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/bottom_sheet_behavior"
-
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-
-
+        app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintVertical_bias="0.468"
         app:srcCompat="@drawable/guitar"
         tools:ignore="ImageContrastCheck" />
 

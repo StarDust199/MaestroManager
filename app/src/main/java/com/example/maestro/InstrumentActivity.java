@@ -2,7 +2,9 @@ package com.example.maestro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 public class InstrumentActivity extends AppCompatActivity {
     private MyOrientationEventListener mOrientationEventListener;
@@ -11,6 +13,10 @@ public class InstrumentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instrument);
         mOrientationEventListener = new MyOrientationEventListener(this);
+    }
+    @Override
+    public void onBackPressed() {
+        // Nie wywołuj super metody, aby zablokować przycisk cofania
     }
     protected void onResume() {
         super.onResume();
@@ -27,5 +33,13 @@ public class InstrumentActivity extends AppCompatActivity {
 
         // Wyrejestrowywanie MyOrientationEventListener
         mOrientationEventListener.disable();
+    }
+
+    public void BackToActivity(View view) {
+        Intent intent;
+        intent = new Intent(InstrumentActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +36,12 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         selectedDate = LocalDate.now();
         setMonthView();
 
-    }
 
+    }
+    @Override
+    public void onBackPressed() {
+        // Nie wywołuj super metody, aby zablokować przycisk cofania
+    }
     private void initWidgets()
     {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
@@ -111,6 +117,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     }
 
 
+
     //@Override
     public void onItemClick(int position, String dayText)
     {
@@ -126,5 +133,15 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
 
         // Wyrejestrowywanie MyOrientationEventListener
         mOrientationEventListener.disable();
+    }
+
+
+    public void BackToActivity(View view) {
+
+        Intent intent;
+        intent = new Intent(CalendarActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }
