@@ -20,4 +20,9 @@
     <string name="sob">SOB</string>
     <string name="niedz">NIEDZ</string>
 
+        <string-array name="user_roles">
+            <item>Użytkownik</item>
+            <item>Admin</item>
+        </string-array>
+
 </resources>

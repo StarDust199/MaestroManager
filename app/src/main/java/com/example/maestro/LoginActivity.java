@@ -29,15 +29,25 @@ public class LoginActivity extends AppCompatActivity {
 
 
         button.setOnClickListener(v -> {
-           String login = mLoginEditText.getText().toString();
-         String  password = mPasswordEditText.getText().toString();
+            String login = mLoginEditText.getText().toString();
+            String password = mPasswordEditText.getText().toString();
 
             DbHelper dbHelper = new DbHelper(LoginActivity.this);
-            if (dbHelper.checkUser(login, password)) {
-                intent = new Intent(LoginActivity.this, MainActivity.class);
+            boolean userExists = dbHelper.checkUser(login, password);
+            if (userExists) {
+                boolean isAdmin = dbHelper.isAdmin(login, password);
+                if (isAdmin) {
+                    // Użytkownik jest administratorem
+                    // Wykonaj odpowiednie działania dla admina, np. ustaw widoczność przycisków edycji
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                } else {
+                    // Użytkownik jest zwykłym użytkownikiem
+                    // Wykonaj odpowiednie działania dla użytkownika, np. ukryj przyciski edycji
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                }
             } else {
-                Toast.makeText(LoginActivity.this, "Nazwa użytkownika i hasło są wymagane", Toast.LENGTH_SHORT).show();
-                intent = new Intent(LoginActivity.this,LoginActivity.class);
+                Toast.makeText(LoginActivity.this, "Nieprawidłowe dane logowania", Toast.LENGTH_SHORT).show();
+                intent = new Intent(LoginActivity.this, LoginActivity.class);
             }
             startActivity(intent);
         });
