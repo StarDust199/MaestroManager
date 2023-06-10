@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
         mOrientationEventListener = new MyOrientationEventListener(this);
         Button button = findViewById(R.id.btn_login);
         TextView txtView = findViewById(R.id.text_register);
-        ImageView mLogoImageView = findViewById(R.id.logo);
         mLoginEditText = findViewById(R.id.login);
         mPasswordEditText = findViewById(R.id.password);
 
@@ -36,20 +34,19 @@ public class LoginActivity extends AppCompatActivity {
             boolean userExists = dbHelper.checkUser(login, password);
             if (userExists) {
                 boolean isAdmin = dbHelper.isAdmin(login, password);
+                Intent intent;
                 if (isAdmin) {
-                    // Użytkownik jest administratorem
-                    // Wykonaj odpowiednie działania dla admina, np. ustaw widoczność przycisków edycji
                     intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("userRole", "Kapelmistrz");
+
                 } else {
-                    // Użytkownik jest zwykłym użytkownikiem
-                    // Wykonaj odpowiednie działania dla użytkownika, np. ukryj przyciski edycji
                     intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("userRole", "Orkiestrant");
                 }
+                startActivity(intent);
             } else {
                 Toast.makeText(LoginActivity.this, "Nieprawidłowe dane logowania", Toast.LENGTH_SHORT).show();
-                intent = new Intent(LoginActivity.this, LoginActivity.class);
             }
-            startActivity(intent);
         });
 
         txtView.setOnClickListener(view -> {

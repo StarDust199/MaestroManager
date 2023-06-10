@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "myDatabase.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 11;
     public static final String TABLE_NAME = "registration";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_LOGIN = "login";
@@ -74,10 +74,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public boolean deleteUsersByID(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, COLUMN_ID + "=" + id, null) > 0;
-    }
+
 
     public boolean updateUsers(RegistrationModel registrationModel) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -101,6 +98,24 @@ public class DbHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {login, password};
         Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        return count > 0;
+    }
+
+    @SuppressLint("Range")
+    public boolean isAdmin(String login, String password) {
+        if (login.isEmpty() || password.isEmpty()) {
+            return false; // Nieprawidłowe dane logowania
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ID, COLUMN_ROLE};
+        String selection = COLUMN_LOGIN + " = ?" + " AND " + COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = {login, password};
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
 
         String userRole = null;
         if (count > 0) {
@@ -111,24 +126,7 @@ public class DbHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
 
-        return userRole != null;
-    }
-
-    public boolean isAdmin(String login, String password) {
-        if (login.isEmpty() || password.isEmpty()) {
-            return false; // Nieprawidłowe dane logowania
-        }
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_ID, COLUMN_ROLE};
-        String selection = COLUMN_LOGIN + " = ?" + " AND " + COLUMN_PASSWORD + " = ?" + " AND " + COLUMN_ROLE + " = ?";
-        String[] selectionArgs = {login, password, "admin"};
-        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
-        int count = cursor.getCount();
-        cursor.close();
-        db.close();
-
-        return count > 0;
+        return userRole != null && userRole.equals("Kapelmistrz");
     }
 
 

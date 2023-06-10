@@ -14,10 +14,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mOrientationEventListener = new MyOrientationEventListener(this);
+        String userRole = getIntent().getStringExtra("userRole");
+        boolean isAdmin = userRole != null && userRole.equals("Kapelmistrz");
+        Button btnAddInstr = findViewById(R.id.btn_addInstr);
+        Button btnAddNotes = findViewById(R.id.btn_addNotes);
 
+        if (isAdmin) {
+            btnAddInstr.setVisibility(View.VISIBLE);
+            btnAddNotes.setVisibility(View.VISIBLE);
+        } else {
+            btnAddInstr.setVisibility(View.GONE);
+            btnAddNotes.setVisibility(View.GONE);
+        }
         Button button = findViewById(R.id.logout);
         button.setOnClickListener(view -> {
             SharedPreferences sharedPreferences = getSharedPreferences("SESSION_DATA", MODE_PRIVATE);
@@ -41,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
        ImageButton imageButton_c = findViewById(R.id.btn_calendar);
-        imageButton_c.setOnClickListener(v -> {
-           openAcivity(v);
-        });
+        imageButton_c.setOnClickListener(this::openAcivity);
 
 
         imageButton = findViewById(R.id.btn_instrument);
