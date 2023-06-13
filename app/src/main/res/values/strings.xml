@@ -9,5 +9,22 @@
     <string name="msg_zal">Masz już konto? Zaloguj się.</string>
     <string name="todo">TODO</string>
     <string name="wyloguj">Wyloguj</string>
+    <string name="back">back</string>
+    <string name="forward">forward</string>
+    <string name="pon">PON</string>
+    <string name="maj_2023">Maj 2023</string>
+    <string name="wt">WT</string>
+    <string name="sr">ŚR</string>
+    <string name="czw">CZW</string>
+    <string name="pi">PIĄ</string>
+    <string name="sob">SOB</string>
+    <string name="niedz">NIEDZ</string>
+    <string name="dodaj_nuty">Dodaj nuty</string>
+    <string name="dodaj_instrument">Dodaj instrument</string>
+
+    <string-array name="user_roles">
+            <item>Orkiestrant</item>
+            <item>Kapelmistrz</item>
+        </string-array>
 
 </resources>

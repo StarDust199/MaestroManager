@@ -7,15 +7,17 @@ public class RegistrationModel {
         private String password;
         private String email;
 
+        private String role;
 
         public RegistrationModel() {
         }
 
-        public RegistrationModel(int id, String login, String password, String email) {
+        public RegistrationModel(int id, String login, String password, String email, String role) {
             this.id = id;
             this.login = login;
             this.password = password;
             this.email = email;
+            this.role = role;
         }
 
         public int getId() {
@@ -42,5 +44,13 @@ public class RegistrationModel {
         public void setEmail(String email) {
             this.email = email;
         }
+
+    public String getRole() {
+        return role;
     }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+}
 

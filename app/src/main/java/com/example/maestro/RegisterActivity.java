@@ -1,22 +1,26 @@
 package com.example.maestro;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Arrays;
 
 public class RegisterActivity extends AppCompatActivity {
     private MyOrientationEventListener mOrientationEventListener;
     private EditText mLogin, mPassword, mEmail;
     DbHelper db;
     RegistrationModel model;
+    Spinner roleSpinner;
     Button btn;
     @SuppressLint("SetTextI18n")
     @Override
@@ -24,16 +28,27 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         db = new DbHelper(RegisterActivity.this);
         setContentView(R.layout.activity_register);
+
+        roleSpinner = findViewById(R.id.role_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.user_roles, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roleSpinner.setAdapter(adapter);
+
         mLogin = findViewById(R.id.login);
         mPassword = findViewById(R.id.password);
         mEmail = findViewById(R.id.email);
         btn= findViewById(R.id.btn_register);
+
         if (getIntent().getExtras() != null && getIntent().hasExtra("id")) {
             model = db.getModelByID(getIntent().getIntExtra("id", 0));
             if (model != null) {
                 mLogin.setText(model.getLogin());
                 mPassword.setText(model.getPassword() + "");
                 mEmail.setText(model.getEmail());
+
+                String[] rolesArray = getResources().getStringArray(R.array.user_roles);
+                int rolePosition = Arrays.asList(rolesArray).indexOf(model.getRole());
+                roleSpinner.setSelection(rolePosition);
 
             } else {
                 Toast.makeText(this, "Napotkano problem", Toast.LENGTH_SHORT).show();
@@ -67,19 +82,20 @@ public class RegisterActivity extends AppCompatActivity {
         mOrientationEventListener.disable();
     }
     public void saveUser(View view) {
+
         String login = mLogin.getText().toString();
         String password = mPassword.getText().toString();
-
         if (login.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Nazwa użytkownika i hasło są wymagane", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (model.getId() == 0)
+        if (model.getId() == 0) {
             model.setLogin(mLogin.getText().toString());
-
-        model.setPassword(mPassword.getText().toString());
-        model.setEmail(mEmail.getText().toString());
+            model.setPassword(mPassword.getText().toString());
+            model.setEmail(mEmail.getText().toString());
+            model.setRole(roleSpinner.getSelectedItem().toString());
+        }
         if (model.getId() > 0) {
             if (db.updateUsers(model)) {
                 Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
